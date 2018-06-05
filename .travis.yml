@@ -1,0 +1,16 @@
+--- 
+language: bash
+script: 
+  - "docker run --rm --privileged multiarch/qemu-user-static:register --reset"
+  - "docker build -t bonny1992/docker-qbittorrent-armv8 ."
+  - |-
+      if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+        docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+        TAG=$(grep "ARG QBITTORRENT_VER" Dockerfile | awk 'NF>1{print $NF}')
+        docker tag bonny1992/docker-qbittorrent-armv8 bonny1992/docker-qbittorrent-armv8:$TAG
+        docker push bonny1992/docker-qbittorrent-armv8:$TAG
+        docker push bonny1992/docker-qbittorrent-armv8
+      fi
+services: 
+  - docker
+sudo: required
