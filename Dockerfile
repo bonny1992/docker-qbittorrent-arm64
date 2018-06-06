@@ -1,4 +1,7 @@
+FROM yen3/binfmt-register:0.1 as builder
 FROM lsiobase/alpine.arm64:3.7
+
+COPY --from=builder /qemu/qemu-aarch64-static /usr/local/bin/qemu-aarch64-static
 
 # set version label
 ARG BUILD_DATE
@@ -65,8 +68,6 @@ RUN \
  tar xf \
  /tmp/bittorrent.tar.gz -C \
 	/tmp/qbittorrent-src --strip-components=1 && \
- cd /tmp/qbittorrent-src/src/app && \
- patch -i /tmp/patches/main.patch && \
  cd /tmp/qbittorrent-src && \
  ./configure \
 	--disable-gui \
