@@ -2,14 +2,14 @@
 language: bash
 script:
   - "docker run --privileged yen3/binfmt-register set aarch64"
-  - "docker build -t bonny1992/docker-qbittorrent-armv8 ."
+  - "docker build -t bonny1992/docker-qbittorrent-arm64 ."
   - |-
       if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
         TAG=4.1.1
-        docker tag bonny1992/docker-qbittorrent-armv8 bonny1992/docker-qbittorrent-armv8:$TAG
-        docker push bonny1992/docker-qbittorrent-armv8:$TAG
-        docker push bonny1992/docker-qbittorrent-armv8
+        docker tag bonny1992/docker-qbittorrent-arm64 bonny1992/docker-qbittorrent-arm64:$TAG
+        docker push bonny1992/docker-qbittorrent-arm64:$TAG
+        docker push bonny1992/docker-qbittorrent-arm64
       fi
 services:
   - docker
