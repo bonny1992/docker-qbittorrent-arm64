@@ -1,7 +1,7 @@
---- 
+---
 language: bash
-script: 
-  - "docker run --rm --privileged multiarch/qemu-user-static:register --reset"
+script:
+  - "docker run --privileged yen3/binfmt-register set aarch64"
   - "docker build -t bonny1992/docker-qbittorrent-armv8 ."
   - |-
       if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
@@ -11,6 +11,6 @@ script:
         docker push bonny1992/docker-qbittorrent-armv8:$TAG
         docker push bonny1992/docker-qbittorrent-armv8
       fi
-services: 
+services:
   - docker
 sudo: required
